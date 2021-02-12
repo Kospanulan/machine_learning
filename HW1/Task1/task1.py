@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[127]:
+# In[71]:
 
 
 import re
 import numpy
 import pandas as pd
-from scipy import spatial
+from numpy import dot
+from numpy.linalg import norm
 
 
-# In[128]:
+# In[72]:
 
 
 text = open("sentences.txt", "r")
@@ -20,7 +21,7 @@ for line in text:
 # print(len(sentences))
 
 
-# In[129]:
+# In[73]:
 
 
 words = {}
@@ -40,7 +41,7 @@ for line in sent_ww:
 # print(sentences)
 
 
-# In[130]:
+# In[74]:
 
 
 num_w = len(words)
@@ -55,7 +56,7 @@ for i in range(num_s):
             matrix[i][words[x]] += 1
 
 
-# In[131]:
+# In[75]:
 
 
 distances = {}
@@ -63,13 +64,11 @@ distances = {}
 fsm = matrix[0, :]
 for i in range(num_s):
     csm = matrix[i, :]
-    
-    distances[i] = spatial.distance.cosine(fsm, csm)
-    
+    distances[i] = 1 - (dot(fsm, csm)/(norm(fsm)*norm(csm)))
 # print(distances)
 
 
-# In[132]:
+# In[76]:
 
 
 
@@ -79,8 +78,14 @@ dist_df['Sentence'] = list(map(lambda x: sentences[x], dist_df.index.values))
 # print(sentences[0])
 
 
-# In[133]:
+# In[77]:
 
 
 dist_df.sort_values('Distance')
+
+
+# In[ ]:
+
+
+
 
