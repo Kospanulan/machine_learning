@@ -60,11 +60,11 @@ for i in range(num_s):
 
 distances = {}
 
-first_sentence_metric = matrix[0, :]
+fsm = matrix[0, :]
 for i in range(num_s):
-    cmp_sentence_metric = matrix[i, :]
+    csm = matrix[i, :]
     
-    distances[i] = spatial.distance.cosine(first_sentence_metric, cmp_sentence_metric)
+    distances[i] = spatial.distance.cosine(fsm, csm)
     
 # print(distances)
 
@@ -73,14 +73,14 @@ for i in range(num_s):
 
 
 
-distances_df = pd.DataFrame.from_dict(distances, orient = 'index')
-distances_df.columns = ['distance']
-distances_df['sentence'] = list(map(lambda x: sentences[x], distances_df.index.values))
+dist_df = pd.DataFrame.from_dict(distances, orient = 'index')
+dist_df.columns = ['Distance']
+dist_df['Sentence'] = list(map(lambda x: sentences[x], dist_df.index.values))
 # print(sentences[0])
 
 
 # In[133]:
 
 
-distances_df.sort_values('distance')
+dist_df.sort_values('Distance')
 
